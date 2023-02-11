@@ -1,0 +1,32 @@
+Recovery Time Objective (RTO) is the amount of time the application is down.
+It is calculated according to the SLA and availability percentage.
+
+Minimum RTO for a single AZ outage
+Time	Description
+00:01	Problem happens (First minute)
+00:06	An amount of time passes before an alert triggers (5 mins)
+00:07	Automatically switch to second availability zone (1 mins)
+Total time is almost 10 minutes
+
+Minimum RTO for a single region outage
+Time	Description
+00:01	Problem happens (First minute)
+00:06	An amount of time passes before an alert triggers (5 mins)
+00:07	Alert triggers on-all staff (1 mins)
+00:17	On-call staff may need to get out of bed, get to a computer, log in, log onto VPN (10 mins)
+00:27	On-call staff starts diagnosing the issue (10 mins)
+00:37	Root cause is discovered (10 mins)
+00:47	Remediation started (10 mins)
+00:52	Issue fixed (5 mins)
+Total time is almost 60 mins
+
+Recovery Point Objective (RPO) is the amount of time the data is being lost.
+It is calculated according to the database and backup strategy being used.
+
+Minimum RPO for a single AZ outage
+RDS has a point in time restoration which uploads transactions every 5 minutes in transaction logs.
+Thus, if this is case then the most data that would be lost would be 5 minutes.
+
+Minimum RPO for a single region outage
+Read replicas aim to be kept up to date with the primary DB so the read replica should have almost the same RPO as the primary DB.
+For some critical cases we can consider at most the RPO should be almost 10 mins for a read replica to be promoted.
